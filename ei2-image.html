@@ -1,0 +1,233 @@
+<!--
+    @license
+    Copyright (c) 2015 Niels Grewe.
+    This code may only be used under the 3-clause BSD style license.
+
+	EVE Online and the EVE logo are the registered trademarks of CCP hf.
+	All rights are reserved worldwide. All other trademarks are the
+	property of their respective owners. EVE Online, the EVE logo, EVE
+	and all associated logos and designs are the intellectual property
+	of CCP hf. All artwork, screenshots, characters, vehicles,
+	storylines, world facts or other recognizable features of the
+	intellectual property relating to these trademarks are likewise the
+	intellectual property of CCP hf.
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-image/core-image.html">
+<!--
+Base element for displaying images from the EVE Online image server.
+
+@element ei2-image
+@blurb Base element for displaying images from the EVE Online image server.
+Supports all features also available in core-image. Most of the time,
+you are better off using the concrete subclasses.
+@status alpha
+@group EI² UI Elements
+@homepage https://github.com/ngrewe/ei2-image
+-->
+<polymer-element name="ei2-image" extends="core-image">
+  <template>
+  <shadow></shadow>
+  </template>
+
+  <script>
+   (function(){
+	 var TYPE_ALLIANCE = 'Alliance';
+	 var TYPE_CORPORATION = 'Corporation';
+	 var TYPE_CHARACTER = 'Character';
+	 var TYPE_ITEM = 'Type';
+	 var TYPE_RENDER = 'Render';
+    Polymer({
+	  publish: {
+		/**
+		 * The type of image to get (one of 'Alliance', 'Corporation', 'Character', 'Type' (i.e. item type), or 'Render'.
+		 * @attribute type
+		 * @type string
+		 */
+		 type: '',
+		 /**
+		  * The identifier in the EVE Online database.
+		  * @attribute eId
+          * @type string
+		  */
+		  eId: '',
+          /**
+		   * The size of the image (translates to height and width in CSS)
+		   * @attribute size
+           * @type integer
+		   * @default 64
+		   */
+		size: 64
+	  },
+	  computed: {
+		src: '\'https://image.eveonline.com/\' + type + \'/\' + eId + \'_\' + size + \'.\' + extensionForSourceType(type) ',
+		width: 'size',
+		height: 'size'
+	  },
+      ready: function() {
+		this.types = {
+          alliance: TYPE_ALLIANCE,
+		  corporation: TYPE_CORPORATION,
+		  character: TYPE_CHARACTER,
+		  item: TYPE_ITEM,
+		  render: TYPE_RENDER
+		};
+      },
+
+	  extensionForSourceType: function(type)
+	  {
+        if (TYPE_CHARACTER == type)
+		{
+		  return 'jpg';
+		}
+		return 'png';
+	  },
+	  /*
+	   * This implementation is here to work around an issue in recent polymer
+	   * See https://github.com/Polymer/core-image/issues/7
+	   */
+	  update: function() {
+		this.style.backgroundSize = this.sizing;
+		this.style.backgroundPosition = this.sizing ? this.position : null;
+		this.style.backgroundRepeat = this.sizing ? 'no-repeat' : null;
+		if (this.preload) {
+		  if (this.fade) {
+			if (!this._placeholderEl) {
+			  this._placeholderEl = this.$.placeholder;
+			}
+			this._placeholderEl.style.backgroundSize = this.sizing;
+			this._placeholderEl.style.backgroundPosition = this.sizing ? this.position : null;
+			this._placeholderEl.style.backgroundRepeat = this.sizing ? 'no-repeat' : null;
+			this._placeholderEl.classList.remove('fadein');
+			this._placeholderEl.style.backgroundImage = (this.load && this.placeholder) ? 'url(' + this.placeholder + ')': null;
+			} else {
+			this._setSrc(this.placeholder);
+		  }
+		  if (this.load && this.src) {
+			var img = new Image();
+			img.src = this.src;
+			this.loading = true;
+			img.onload = function() {
+			  this._setSrc(this.src);
+			  this.loading = false;
+			  if (this.fade) {
+				this._placeholderEl.classList.add('fadein');
+			  }
+			}.bind(this);
+		  }
+		  } else {
+		  this._setSrc(this.src);
+		}
+	  },
+
+    });
+ })();
+  </script>
+</polymer-element>
+
+<!--
+Display an item icon.
+@element ei2-item-image
+@group EI² UI Elements
+-->
+  <polymer-element name="ei2-item-image" extends="ei2-image">
+  <template>
+  <shadow></shadow>
+  </template>
+  <script>
+	Polymer({
+	  computed: {
+		type: 'types.item',
+		src: '\'https://image.eveonline.com/\' + type + \'/\' + eId + \'_\' + size + \'.\' + extensionForSourceType(type) ',
+		width: 'size',
+		height: 'size'
+	  }
+	});
+  </script>
+  </polymer-element>
+
+
+<!--
+Display an alliance logo
+@element ei2-alliance-image
+@group EI² UI Elements
+-->
+<polymer-element name="ei2-alliance-image" extends="ei2-image">
+<template>
+<shadow></shadow>
+</template>
+<script>
+  Polymer({
+	computed: {
+	  type: 'types.alliance',
+		src: '\'https://image.eveonline.com/\' + type + \'/\' + eId + \'_\' + size + \'.\' + extensionForSourceType(type) ',
+		width: 'size',
+		height: 'size'
+	}
+  });
+</script>
+</polymer-element>
+
+<!--
+Display a corporation logo.
+@element ei2-char-image
+@group EI² UI Elements
+-->
+  <polymer-element name="ei2-corp-image" extends="ei2-image">
+  <template>
+  <shadow></shadow>
+  </template>
+  <script>
+	Polymer({
+	  computed: {
+		type: 'types.corporation',
+		src: '\'https://image.eveonline.com/\' + type + \'/\' + eId + \'_\' + size + \'.\' + extensionForSourceType(type) ',
+		width: 'size',
+		height: 'size'
+	  }
+	});
+  </script>
+  </polymer-element>
+
+<!--
+Display a character portrait.
+@element ei2-char-image
+@group EI² UI Elements
+-->
+  <polymer-element name="ei2-char-image" extends="ei2-image">
+  <template>
+  <shadow></shadow>
+  </template>
+  <script>
+	Polymer({
+	  computed: {
+		type: 'types.character',
+		src: '\'https://image.eveonline.com/\' + type + \'/\' + eId + \'_\' + size + \'.\' + extensionForSourceType(type) ',
+		width: 'size',
+		height: 'size'
+	  }
+	});
+  </script>
+  </polymer-element>
+<!--
+Display a ship render image.
+@element ei2-render-image
+@group EI² UI Elements
+-->
+<polymer-element name="ei2-render-image" extends="ei2-image">
+<template>
+<shadow></shadow>
+</template>
+<script>
+  Polymer({
+	computed: {
+	  type: 'types.render',
+		src: '\'https://image.eveonline.com/\' + type + \'/\' + eId + \'_\' + size + \'.\' + extensionForSourceType(type) ',
+		width: 'size',
+		height: 'size'
+	}
+  });
+</script>
+</polymer-element>
+
+
