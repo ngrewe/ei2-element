@@ -9,12 +9,18 @@ Instead of writing src URLs in `<img>` tags (such as
 `https://image.eveonline.com/Character/94306456_64.jpg`) it allows you to write
 slightly more readable things like this:
 
-     <ei2-char-image eId="94306456_64"></ei2-char-image>
+     <ei2-char-image eId="94306456"></ei2-char-image>
 
 What is even more cool is that it uses
 [Polymer](http://www.polymer-project.org) and its similarly awesome
 `<core-image>` element so you get all those extra features (preloading 
 and fading images, smart sizing, etc) as well.
+
+Documentation is available [here](http://ngrewe.github.io/ei2-image/components/ei2-image/#ei2-image)
+
+## Known issues
+
+Presently webcomponents.js is [broken](https://github.com/webcomponents/webcomponentsjs/issues/164) in Safari. This should be fixed shortly.
 
 ## License
 
