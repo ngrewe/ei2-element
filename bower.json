@@ -1,0 +1,7 @@
+{
+  "name": "ei2-image#gh-pages",
+  "private": true,
+  "dependencies": {
+    "ei2-image": "ngrewe/ei2-image#master"
+  }
+}

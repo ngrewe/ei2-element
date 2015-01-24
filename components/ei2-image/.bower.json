@@ -1,0 +1,33 @@
+{
+  "name": "ei2-image",
+  "authors": [
+    "Niels Grewe <niels.grewe@halbordnung.de>"
+  ],
+  "description": "Elements for easily loading images from the EVE Online image server",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "eve-online"
+  ],
+  "main": "ei2-image.html",
+  "license": "BSD",
+  "homepage": "https://github.com/ngrewe/ei2-image/",
+  "ignore": [
+    "/.*"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.4",
+    "core-image": "Polymer/core-image#~0.5.4"
+  },
+  "_release": "0f6875dfb4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0f6875dfb432b5f3e920d1743a75cf46a9892a64"
+  },
+  "_source": "git://github.com/ngrewe/ei2-image.git",
+  "_target": "master",
+  "_originalSource": "ngrewe/ei2-image",
+  "_direct": true
+}
