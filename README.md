@@ -18,10 +18,6 @@ and fading images, smart sizing, etc) as well.
 
 Documentation is available [here](http://ngrewe.github.io/ei2-image/components/ei2-image/#ei2-image)
 
-## Known issues
-
-Presently webcomponents.js is [broken](https://github.com/webcomponents/webcomponentsjs/issues/164) in Safari. This should be fixed shortly.
-
 ## License
 
 Copyright (c) 2015 Niels Grewe.

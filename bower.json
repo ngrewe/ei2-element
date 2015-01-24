@@ -18,7 +18,7 @@
     "/.*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^0.5.3",
-    "core-image": "Polymer/core-image#~0.5.3"
+    "polymer": "Polymer/polymer#^0.5.4",
+    "core-image": "Polymer/core-image#~0.5.4"
   }
 }
